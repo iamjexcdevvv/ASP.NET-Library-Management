@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-theme="corporate">
+<html lang="en" data-theme="nord">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,26 +8,77 @@
     <link href="~/css/output.css" rel="stylesheet">
 </head>
 <body class="font-mono">
-    <div class="navbar bg-neutral text-primary">
-        <div class="flex-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-            </svg>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-ghost text-xl">Library Management</a>
+    <div class="navbar bg-accent text-primary p-4">
+        <div class="flex flex-row-reverse flex-1 justify-between md:justify-start md:flex-row">
+            <div class="flex-none md:hidden">
+                <button id="menuButton" class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-row items-center">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-ghost text-nowrap text-neutral font-bold text-lg lg:text-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                    </svg>
+                    Library Management
+                </a>
+            </div>
         </div>
-        <div>
-            <ul class="menu menu-horizontal px-1">
-                <li class="text-lg text-accent"><a asp-controller="Home" asp-action="Books">Manage Books</a></li>
-             </ul>
+        <div class="flex-1 hidden md:flex md:justify-end">
+            <ul class="menu menu-horizontal flex-nowrap">
+                <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Home" asp-action="AddBook">Add Book</a></li>
+                <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Home" asp-action="Books">Books</a></li>
+            </ul>
         </div>
     </div>
-    <div class="container h-[calc(100vh-76px)]">
-        <main role="main" class="h-full">
+
+    <div id="sidebar" class="fixed top-0 right-0 w-64 h-full bg-white shadow-lg transform translate-x-full transition-all duration-300 ease-in-out z-50">
+        <button id="closeButton" class="absolute top-3 right-3 text-gray-700 hover:text-red-500 text-xl">
+            ✕
+        </button>
+
+        <ul class="menu p-4 text-gray-900">
+            <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Home" asp-action="AddBook">Add Book</a></li>
+            <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Home" asp-action="Books">Books</a></li>
+        </ul>
+    </div>
+
+    <div class="w-full">
+        <main role="main" class="w-full">
             @RenderBody()
         </main>
     </div>
     @await RenderSectionAsync("Scripts", required: false)
 
     <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+
+    <script defer>
+        const menuButton = document.getElementById("menuButton");
+        const sidebar = document.getElementById("sidebar");
+        const closeButton = document.getElementById("closeButton");
+        const backdrop = document.getElementById("backdrop");
+
+        // Toggle sidebar function
+        function toggleSidebar(show) {
+            if (show) {
+                sidebar.classList.remove("translate-x-full");
+                backdrop.classList.remove("hidden");
+            } else {
+                sidebar.classList.add("translate-x-full");
+                backdrop.classList.add("hidden");
+            }
+        }
+
+        // Open sidebar
+        menuButton.addEventListener("click", () => toggleSidebar(true));
+
+        // Close sidebar
+        closeButton.addEventListener("click", () => toggleSidebar(false));
+
+        // Close when clicking the backdrop
+        backdrop.addEventListener("click", () => toggleSidebar(false));
+    </script>
 </body>
 </html>

@@ -1,0 +1,54 @@
+﻿<section class="bg-primary h-[calc(100vh-72px)] flex items-center lg:h-[calc(100vh-88px)]">
+    <div class="relative overflow-auto card glass h-[90%] bg-primary mx-auto w-4/5">
+        <div class="absolute w-full h-full flex flex-col px-6 pt-2">
+            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new book</h2>
+            <form action="#" class="flex flex-col flex-grow">
+                <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 flex-grow">
+                    <div class="sm:col-span-2">
+                        <label for="book-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Title</label>
+                        <input type="text" name="book-title" id="book-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type the book title here" required="">
+                    </div>
+                    <div class="w-full">
+                        <label for="book-isbn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book ISBN</label>
+                        <input type="text" name="book-isbn" id="book-isbn" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type the book isbn number here" required="">
+                    </div>
+                    <div class="w-full">
+                        <label for="book-author" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Author</label>
+                        <input type="text" name="book-author" id="book-author" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type the book author here" required="">
+                    </div>
+                    <div>
+                        <label for="book-genre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Genre</label>
+                        <select id="book-genre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option selected="">Select category</option>
+                            <option value="romance">Romance</option>
+                            <option value="horror">Horror</option>
+                            <option value="finance">Finance</option>
+                            <option value="fantasy">Fantasy</option>
+                        </select>
+                    </div>
+                    <div class="w-full">
+                        <label for="book-publisher" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Publisher</label>
+                        <input type="text" name="book-publisher" id="book-publisher" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type the book publisher here" required="">
+                    </div>
+                    <div>
+                        <label for="published-date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Published Date</label>
+                        <input type="date" name="published-date" id="published-date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type the book published date here" required="">
+                    </div>
+                    <div>
+                        <label for="book-status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                        <select id="book-status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option selected="">Select category</option>
+                            <option value="available">Available</option>
+                            <option value="n-available">Not available</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-auto flex justify-start py-6">
+                    <button type="submit" class="btn px-4 py-2 text-sm font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                        Add product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
