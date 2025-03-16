@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="corporate">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management</title>
+    <script type="importmap"></script>
+    <link href="~/css/output.css" rel="stylesheet">
+</head>
+<body class="font-mono">
+    <div class="navbar bg-neutral text-primary">
+        <div class="flex-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+            </svg>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-ghost text-xl">Library Management</a>
+        </div>
+        <div>
+            <ul class="menu menu-horizontal px-1">
+                <li class="text-lg text-accent"><a asp-controller="Home" asp-action="Books">Manage Books</a></li>
+             </ul>
+        </div>
+    </div>
+    <div class="container h-[calc(100vh-76px)]">
+        <main role="main" class="h-full">
+            @RenderBody()
+        </main>
+    </div>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+</body>
+</html>
