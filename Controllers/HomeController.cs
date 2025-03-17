@@ -1,16 +1,19 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using LibraryManagement.Models;
+using LibraryManagement.Data;
 
 namespace LibraryManagement.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly BookManagementContext _dbContext;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, BookManagementContext dbContext)
     {
         _logger = logger;
+        _dbContext = dbContext;
     }
     public IActionResult Index()
     {
