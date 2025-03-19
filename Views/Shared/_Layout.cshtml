@@ -8,7 +8,7 @@
     <link href="~/css/output.css" rel="stylesheet">
 </head>
 <body class="font-mono">
-    <div class="navbar bg-accent text-primary p-4">
+    <div class="navbar bg-accent text-primary p-2">
         <div class="flex flex-row-reverse flex-1 justify-between md:justify-start md:flex-row">
             <div class="flex-none md:hidden">
                 <button id="menuButton" class="btn btn-square btn-ghost">
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div id="sidebar" class="fixed top-0 right-0 w-64 h-full bg-white shadow-lg transform translate-x-full transition-all duration-300 ease-in-out z-50">
+    <div id="sidebar" class="fixed top-0 right-0 w-64 h-full bg-base-100 shadow-lg transform translate-x-full transition-all duration-300 ease-in-out z-50">
         <button id="closeButton" class="absolute top-3 right-3 text-gray-700 hover:text-red-500 text-xl">
             ✕
         </button>
@@ -50,24 +50,21 @@
             @RenderBody()
         </main>
     </div>
-    @await RenderSectionAsync("Scripts", required: false)
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 
     <script defer>
         const menuButton = document.getElementById("menuButton");
         const sidebar = document.getElementById("sidebar");
         const closeButton = document.getElementById("closeButton");
-        const backdrop = document.getElementById("backdrop");
 
         // Toggle sidebar function
         function toggleSidebar(show) {
             if (show) {
                 sidebar.classList.remove("translate-x-full");
-                backdrop.classList.remove("hidden");
             } else {
                 sidebar.classList.add("translate-x-full");
-                backdrop.classList.add("hidden");
             }
         }
 
@@ -76,9 +73,8 @@
 
         // Close sidebar
         closeButton.addEventListener("click", () => toggleSidebar(false));
-
-        // Close when clicking the backdrop
-        backdrop.addEventListener("click", () => toggleSidebar(false));
     </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

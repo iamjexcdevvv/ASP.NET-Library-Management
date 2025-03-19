@@ -1,1 +1,212 @@
-﻿<h1>Hello World - This is from books page</h1>
+﻿@model List<LibraryManagement.Models.BookEntries>
+
+@Html.AntiForgeryToken()
+
+<div class="h-[calc(100vh-64px)] relative w-full bg-primary p-4 flex items-center md:h-[calc(100vh-72px)] md:p-0">
+    <div id="overlay" class="hidden fixed top-0 left-0 right-0 bottom-0 h-full w-full bg-black opacity-50 z-10"></div>
+    <div class="overflow-auto bg-neutral card glass h-[90%] mx-auto lg:w-4/5">
+        <table class="table">
+            <thead class="bg-accent">
+                <tr>
+                    <th class="text-neutral">#</th>
+                    <th class="text-neutral">Book ISBN</th>
+                    <th class="text-neutral">Book Title</th>
+                    <th class="text-neutral">Book Author</th>
+                    <th class="text-neutral">Book Publisher</th>
+                    <th class="text-neutral">Book Genre</th>
+                    <th class="text-neutral">Book Published Date</th>
+                    <th class="text-neutral">Book Status</th>
+                    <th class="text-neutral">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-base-100 text-nowrap">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr class="hover:bg-neutral">
+                        <th>@(i + 1)</th>
+                        <td>@Model[i].BookISBN</td>
+                        <td>@Model[i].BookTitle</td>
+                        <td>@Model[i].BookAuthor</td>
+                        <td>@Model[i].BookPublisher</td>
+                        <td>@Model[i].BookGenre</td>
+                        <td>@Model[i].BookPublishedDate.ToShortDateString()</td>
+                        @{
+                            string status = @Model[i].BookStatus ? "Available" : "Not available";
+                            string colorClass = Model[i].BookStatus ? "text-green-500" : "text-red-600";
+                            <td class="@colorClass">@status</td>
+                        }
+                        <td>
+                            <button class="btn btn-sm btn-primary edit-btn" data-id="@Model[i].Id">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
+                                </svg>
+                                Edit
+                            </button>
+                            <button class="btn btn-sm btn-error delete-btn" data-id="@Model[i].Id">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                                </svg>
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div id="modal" class="hidden bg-base-100 dark:bg-gray-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[90%] max-w-lg w-full card overflow-auto z-20">
+        <div class="p-4">
+            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Editing book</h2>
+            <form action="#">
+                <div class="grid gap-4 mb-4 md:grid-cols-2 md:gap-6 md:mb-5">
+                    <div class="md:col-span-2">
+                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                        <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                    </div>
+                    <div class="w-full">
+                        <label for="isbn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ISBN</label>
+                        <input type="text" name="isbn" id="isbn" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Product brand" required="">
+                    </div>
+                    <div class="w-full">
+                        <label for="author" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Author Name</label>
+                        <input type="text" name="author" id="author" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$299" required="">
+                    </div>
+                    <div>
+                        <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genre</label>
+                        <select id="genre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option disabled selected value="">Select category</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Fantasy">Fantasy</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="publisher" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Publisher</label>
+                        <input type="text" name="publisher" id="publisher" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Ex. 12" required="">
+                    </div> 
+                    <div>
+                        <label for="published-date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Published Date</label>
+                        <input type="date" name="published-date" id="published-date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Ex. 12" required="">
+                    </div>
+                    <div>
+                        <label for="book-status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                        <select id="book-status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option disabled selected value="">Select category</option>
+                            <option value="true">Available</option>
+                            <option value="false">Not available</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button type="submit" class="btn text-base-100 bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
+                        </svg>
+                        Update book
+                    </button>
+                    <button type="button" id="cancel-btn" class="btn text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>
+                        </svg>
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script defer>
+        const modal = document.getElementById("modal");
+        const overlay = document.getElementById("overlay");
+        const cancelButton = document.getElementById("cancel-btn");
+        
+        const editButton = document.querySelectorAll(".edit-btn");
+
+        function toggleModalWithOverlay() {
+            if (modal.classList.contains("hidden") && overlay.classList.contains("hidden")) {
+                modal.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+            }
+            else {
+                modal.classList.add("hidden");
+                overlay.classList.add("hidden");
+            }
+        }
+
+        editButton.forEach(element => {
+            element.addEventListener("click", toggleModalWithOverlay);
+        });
+
+        cancelButton.addEventListener("click", toggleModalWithOverlay);
+
+        overlay.addEventListener("click", toggleModalWithOverlay);
+
+        $(document).ready(function () {
+            $(".delete-btn").click(function() {
+                var button = $(this);
+                var id = button.data("id");
+
+                if (confirm("Are you sure you want to delete this item?")) {
+                    $.ajax({
+                        url: "/Home/DeleteBook", // URL to the delete action
+                        type: "POST", // Use POST method
+                        data: { id: id }, // Send the ID as data
+                        headers: {
+                            "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() // Anti-forgery token
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                location.reload();
+                            } else {
+                                alert("Failed to delete the item.");
+                            }
+                        },
+                        error: function () {
+                            alert("An error occurred while deleting the item.");
+                        }
+                    });
+                }
+            });
+
+            $(".edit-btn").click(function() {
+                var button = $(this);
+                var id = button.data("id");
+
+                $.ajax({
+                    url: "/Home/GetBook", // URL to the edit action
+                    type: "POST", // Use POST method
+                    data: { id: id }, // Send the ID as data
+                    headers: {
+                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() // Anti-forgery token
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            const bookStatus = response.data.status ? "true" : "false";
+
+                            let date = new Date(response.data.publishedDate);
+                            let formattedDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
+                            $("#published-date").val(formattedDate);
+
+                            $("#title").val(response.data.title);
+                            $("#isbn").val(response.data.isbn);
+                            $("#author").val(response.data.author);
+                            $("#publisher").val(response.data.publisher);
+                            $("#book-status").val(bookStatus);
+                            $("#genre").val(response.data.genre);
+                        } else {
+                            alert("Failed to search the item.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while searching the item.");
+                    }
+                });
+            });
+        });
+    </script>
+}
