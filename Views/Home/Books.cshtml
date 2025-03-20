@@ -57,7 +57,7 @@
     <div id="modal" class="hidden bg-base-100 dark:bg-gray-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[90%] max-w-lg w-full card overflow-auto z-20">
         <div class="p-4">
             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Editing book</h2>
-            <form action="#">
+            <form asp-controller="Home" asp-action="UpdateBook" method="post" id="update-form">
                 <div class="grid gap-4 mb-4 md:grid-cols-2 md:gap-6 md:mb-5">
                     <div class="md:col-span-2">
                         <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
@@ -93,13 +93,13 @@
                         <label for="book-status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
                         <select id="book-status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option disabled selected value="">Select category</option>
-                            <option value="true">Available</option>
-                            <option value="false">Not available</option>
+                            <option value="Available">Available</option>
+                            <option value="Not available">Not available</option>
                         </select>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button type="submit" class="btn text-base-100 bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    <button type="submit" id="update-btn" class="btn text-base-100 bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                         </svg>
@@ -186,7 +186,7 @@
                     },
                     success: function (response) {
                         if (response.success) {
-                            const bookStatus = response.data.status ? "true" : "false";
+                            const bookStatus = response.data.status ? "Available" : "Not available";
 
                             let date = new Date(response.data.publishedDate);
                             let formattedDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
@@ -198,6 +198,7 @@
                             $("#publisher").val(response.data.publisher);
                             $("#book-status").val(bookStatus);
                             $("#genre").val(response.data.genre);
+                            $("#update-btn").attr("data-id", response.data.bookId);
                         } else {
                             alert("Failed to search the item.");
                         }
@@ -207,6 +208,41 @@
                     }
                 });
             });
+
+            $("#update-form").submit(function(event) {
+                event.preventDefault();
+
+                const bookStatus = $("#book-status").val() === "Available";
+
+                const bookId = $("#update-btn").attr("data-id");
+                const newBookData = {
+                    Id: bookId,
+                    BookTitle: $("#title").val(),
+                    BookISBN: $("#isbn").val(),
+                    BookAuthor: $("#author").val(),
+                    BookGenre: $("#genre").val(),
+                    BookPublisher: $("#publisher").val(),
+                    BookPublishedDate: $("#published-date").val(),
+                    BookStatus: bookStatus
+                }
+
+                $.ajax({
+                    url: "/Home/UpdateBook",
+                    type: "POST",
+                    data: newBookData,
+                    success: function(response) {
+                        if (response.success) {
+                            alert("Book updated successfully!");
+                        }
+                        else {
+                            alert("Failed to update the book");
+                        }
+                    },
+                    error: function() {
+                        alert("An error occurred while searching the item.");
+                    }
+                })
+            })
         });
     </script>
 }

@@ -100,6 +100,7 @@ public class HomeController : Controller
             success = true,
             data = new
             {
+                bookId = book.Id,
                 title = book.BookTitle,
                 isbn = book.BookISBN,
                 author = book.BookAuthor,
@@ -109,6 +110,34 @@ public class HomeController : Controller
                 status = book.BookStatus
             }
         });
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> UpdateBook(BookEntries obj)
+    {
+        if (obj == null)
+        {
+            return Json(new { success = false, message = "Invalid data" });
+        }
+
+        var book = await _dbContext.Books.FindAsync(obj.Id);
+
+        if (book == null)
+        {
+            return Json(new { success = false, message = "Book not found" });
+        }
+
+        book.BookTitle = obj.BookTitle;
+        book.BookISBN = obj.BookISBN;
+        book.BookAuthor = obj.BookAuthor;
+        book.BookPublisher = obj.BookPublisher;
+        book.BookGenre = obj.BookGenre;
+        book.BookStatus = obj.BookStatus;
+        book.BookPublishedDate = obj.BookPublishedDate;
+
+        await _dbContext.SaveChangesAsync();
+
+        return Json(new { success = true, message = "Book updated successfully." });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
