@@ -232,6 +232,7 @@
                     data: newBookData,
                     success: function(response) {
                         if (response.success) {
+                            location.reload();
                             alert("Book updated successfully!");
                         }
                         else {
