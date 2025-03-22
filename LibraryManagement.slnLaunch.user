@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "LibraryManagement.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\WebAPI\\LibraryManagementAPI\\LibraryManagementAPI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
