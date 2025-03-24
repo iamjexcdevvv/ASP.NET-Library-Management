@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryManagement.Controllers
+namespace LibraryManagement.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly BookManagementContext _dbContext;
-        public BooksController(BookManagementContext dbContext)
+        private readonly ApplicationDbContext _dbContext;
+        public BooksController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
