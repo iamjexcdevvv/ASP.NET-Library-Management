@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using LibraryManagement.Validator;
 
 namespace LibraryManagement.Models
@@ -24,6 +25,7 @@ namespace LibraryManagement.Models
 
         [Required(ErrorMessage = "* Book published date is required")]
         [DateNotInTheFuture]
+        [Column(TypeName = "date")]
         public DateTime BookPublishedDate { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "* Book availability status is required")]
