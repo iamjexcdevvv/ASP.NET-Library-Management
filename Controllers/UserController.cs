@@ -22,11 +22,13 @@ namespace LibraryManagement.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel? model)
         {
@@ -42,30 +44,36 @@ namespace LibraryManagement.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                 };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Dashboard", "User");
                 }
+
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("Password", error.Description);
+                    if (error.Code == "DuplicateEmail" || error.Code == "DuplicateUserName")
+                    {
+                        ModelState.AddModelError("Email", error.Description);
+                    }
                 }
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }
             return View(model);
         }
 
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
-        [HttpPost]
+
         [AllowAnonymous]
+        [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
@@ -96,6 +104,8 @@ namespace LibraryManagement.Controllers
             }
             return View(request);
         }
+
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
