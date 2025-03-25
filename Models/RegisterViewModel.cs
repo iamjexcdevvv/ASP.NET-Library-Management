@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using LibraryManagement.Validator;
 
 namespace LibraryManagement.Models
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : IAccountViewModel
     {
         [Required]
         [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid email address format")]
@@ -18,7 +17,7 @@ namespace LibraryManagement.Models
         [Compare(nameof(Password), ErrorMessage = "Password and confirmation password not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
-        [UserMustAgree]
+        [Required(ErrorMessage = "You must agree with the terms and condition")]
         public bool TermsAndConditionAgreement { get; set; }
     }
 }

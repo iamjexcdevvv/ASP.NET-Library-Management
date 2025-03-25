@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagement.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class BookController : Controller
 {
     private readonly ILogger<BookController> _logger;
@@ -20,31 +21,23 @@ public class BookController : Controller
         _logger = logger;
         _dbContext = dbContext;
     }
-    public IActionResult Forbidden()
-    {
-        return View();
-    }
 
-    [Authorize(Roles = "Admin")]
     public IActionResult Index()
     {
         return View();
     }
 
-    [Authorize(Roles = "Admin")]
     public IActionResult AddBook()
     {
         return View();
     }
 
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Books()
     {
         List<BookEntries> booksObj = await _dbContext.Books.ToListAsync();
         return View(booksObj);
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteBook(int? id)
@@ -67,8 +60,8 @@ public class BookController : Controller
         return Json(new { success = true });
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddBook(BookEntries obj)
     {
         bool bookTitleExists = await _dbContext.Books.AnyAsync(book => book.BookTitle == obj.BookTitle);
@@ -93,8 +86,8 @@ public class BookController : Controller
         return View(obj);
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> GetBook(int? id)
     {
         if (id == null)
@@ -125,8 +118,8 @@ public class BookController : Controller
         });
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateBook(BookEntries obj)
     {
         if (obj == null)
