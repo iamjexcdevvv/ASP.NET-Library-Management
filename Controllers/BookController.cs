@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using LibraryManagement.Utility;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
+using LibraryManagement.Models.Book;
+using LibraryManagement.Services;
 
 namespace LibraryManagement.Controllers;
 
@@ -14,12 +16,12 @@ namespace LibraryManagement.Controllers;
 public class BookController : Controller
 {
     private readonly ILogger<BookController> _logger;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IBook _bookRepository;
 
-    public BookController(ILogger<BookController> logger, ApplicationDbContext dbContext)
+    public BookController(ILogger<BookController> logger, IBook bookRepository)
     {
         _logger = logger;
-        _dbContext = dbContext;
+        _bookRepository = bookRepository;
     }
 
     public IActionResult Index()
@@ -34,7 +36,7 @@ public class BookController : Controller
 
     public async Task<IActionResult> Books()
     {
-        List<BookEntries> booksObj = await _dbContext.Books.ToListAsync();
+        List<BookEntries> booksObj = await _bookRepository.GetBooks();
         return View(booksObj);
     }
 
@@ -47,15 +49,12 @@ public class BookController : Controller
             return Json(new { success = false, message = "Invalid ID." });
         }
 
-        var book = await _dbContext.Books.FindAsync(id);
+        bool result = await _bookRepository.DeleteBook(id);
 
-        if (book == null)
+        if (!result)
         {
             return Json(new { success = false, message = "Item not found." });
         }
-
-        _dbContext.Books.Remove(book);
-        await _dbContext.SaveChangesAsync();
 
         return Json(new { success = true });
     }
@@ -64,22 +63,26 @@ public class BookController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddBook(BookEntries obj)
     {
-        bool bookTitleExists = await _dbContext.Books.AnyAsync(book => book.BookTitle == obj.BookTitle);
+        BookEntries cleanObj = new BookEntries
+        {
+            BookAuthor = StringHelper.CleanInput(obj.BookAuthor),
+            BookPublisher = StringHelper.CleanInput(obj.BookPublisher),
+            BookTitle = StringHelper.CleanInput(obj.BookTitle),
+            BookISBN = obj.BookISBN.Replace("-", ""),
+            BookGenre = obj.BookGenre,
+            BookPublishedDate = obj.BookPublishedDate,
+            BookStatus = obj.BookStatus
+        };
 
-        if (bookTitleExists)
+        bool result = await _bookRepository.AddBook(cleanObj);
+
+        if (!result)
         {
             ModelState.AddModelError("BookTitle", "* A book with this title already exists.");
         }
 
         if (ModelState.IsValid)
         {
-            obj.BookTitle = StringHelper.CleanInput(obj.BookTitle);
-            obj.BookPublisher = StringHelper.CleanInput(obj.BookPublisher);
-            obj.BookAuthor = StringHelper.CleanInput(obj.BookAuthor);
-            obj.BookISBN = obj.BookISBN.Replace("-", "");
-
-            await _dbContext.AddAsync(obj);
-            await _dbContext.SaveChangesAsync();
             return RedirectToAction("Books");
         }
 
@@ -88,34 +91,21 @@ public class BookController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> GetBook(int? id)
+    public async Task<IActionResult> GetBookById(int? id)
     {
         if (id == null)
         {
-            return Json(new { success = false, message = "Invalid ID." });
+            return BadRequest();
         }
 
-        var book = await _dbContext.Books.FindAsync(id);
+        BookEntries? book = await _bookRepository.GetBookById(id);
 
         if (book == null)
         {
-            return Json(new { success = false, message = "Item not found." });
+            return NotFound();
         }
 
-        return Json(new {
-            success = true,
-            data = new
-            {
-                bookId = book.Id,
-                title = book.BookTitle,
-                isbn = book.BookISBN,
-                author = book.BookAuthor,
-                genre = book.BookGenre,
-                publisher = book.BookPublisher,
-                publishedDate = book.BookPublishedDate,
-                status = book.BookStatus
-            }
-        });
+        return PartialView("_EditBookPartial", book);
     }
 
     [HttpPost]
@@ -124,27 +114,22 @@ public class BookController : Controller
     {
         if (obj == null)
         {
-            return Json(new { success = false, message = "Invalid data" });
+            return BadRequest();
         }
 
-        var book = await _dbContext.Books.FindAsync(obj.Id);
-
-        if (book == null)
+        if (!ModelState.IsValid)
         {
-            return Json(new { success = false, message = "Book not found" });
+            return PartialView("_EditBookPartial", obj);
         }
 
-        book.BookTitle = obj.BookTitle;
-        book.BookISBN = obj.BookISBN;
-        book.BookAuthor = obj.BookAuthor;
-        book.BookPublisher = obj.BookPublisher;
-        book.BookGenre = obj.BookGenre;
-        book.BookStatus = obj.BookStatus;
-        book.BookPublishedDate = obj.BookPublishedDate;
+        bool result = await _bookRepository.UpdateBook(obj);
 
-        await _dbContext.SaveChangesAsync();
+        if (!result)
+        {
+            return NotFound();
+        }
 
-        return Json(new { success = true, message = "Book updated successfully." });
+        return RedirectToAction("Books", "Book");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

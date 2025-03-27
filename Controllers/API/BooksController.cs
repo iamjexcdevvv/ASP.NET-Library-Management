@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using LibraryManagement.Data;
-using LibraryManagement.Models;
+using LibraryManagement.Models.Book;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
