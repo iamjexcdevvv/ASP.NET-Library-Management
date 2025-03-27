@@ -98,7 +98,7 @@ namespace LibraryManagement.Controllers
                 
                 if (roles.Contains("Admin"))
                 {
-                    return RedirectToAction("Index", "Book");
+                    return RedirectToAction("Dashboard", "Admin");
                 }
 
                 return RedirectToAction("Dashboard", "User");

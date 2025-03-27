@@ -60,6 +60,11 @@ namespace LibraryManagement.Models.Book
             return await _context.Books.ToListAsync();
         }
 
+        public async Task<int> GetBooksCount()
+        {
+            return await _context.Books.CountAsync();
+        }
+
         public async Task<bool> UpdateBook(BookEntries updatedBookEntry)
         {
             var oldBookEntry = await _context.Books.FindAsync(updatedBookEntry.Id);

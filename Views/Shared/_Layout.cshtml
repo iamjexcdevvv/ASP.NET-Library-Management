@@ -23,11 +23,11 @@
                             </button>
                         </div>
                         <div class="flex flex-row items-center">
-                            <a asp-controller="Book" asp-action="Index" class="btn btn-ghost text-nowrap text-neutral font-bold text-lg lg:text-xl">
+                            <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-ghost text-nowrap text-neutral font-bold text-lg lg:text-xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                                 </svg>
-                                Library Management
+                                LibriFlow
                             </a>
                         </div>
                     </div>
@@ -35,7 +35,6 @@
                         <ul class="menu menu-horizontal flex-nowrap">
                             <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Book" asp-action="AddBook">Add Book</a></li>
                             <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Book" asp-action="Books">Books</a></li>
-                            <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a class="logout-btn">Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -48,7 +47,6 @@
                     <ul class="menu p-4 text-gray-900">
                         <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Book" asp-action="AddBook">Add Book</a></li>
                         <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a asp-controller="Book" asp-action="Books">Books</a></li>
-                        <li class="text-base text-neutral text-nowrap font-semibold lg:text-lg"><a class="logout-btn">Logout</a></li>
                     </ul>
                 </div>
             }
