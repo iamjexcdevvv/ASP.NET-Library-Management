@@ -2,7 +2,8 @@
 
 namespace LibraryManagement.Models
 {
-    interface IAccountViewModel {
+    public interface IAccount
+    {
         string Email { get; set; }
         string Password { get; set; }
     }

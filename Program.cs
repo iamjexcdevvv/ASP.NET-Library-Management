@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using LibraryManagement.Models;
 using System;
+using LibraryManagement.Services;
+using LibraryManagement.Models.Book;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,8 @@ var connectionString =
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IBook, BookImpl>();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {

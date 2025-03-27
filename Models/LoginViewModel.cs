@@ -2,7 +2,7 @@
 
 namespace LibraryManagement.Models
 {
-    public class LoginViewModel : IAccountViewModel
+    public class LoginViewModel : IAccount
     {
         [Required]
         [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid email address format")]
