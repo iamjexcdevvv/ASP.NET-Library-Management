@@ -1,0 +1,130 @@
+﻿<section class="w-full h-screen flex bg-neutral">
+	<div class="basis-[30%] p-2 lg:basis-[25%]">
+		<div
+			class="bg-neutral glass w-full h-full rounded-lg p-3 flex flex-col justify-between"
+		>
+			<div class="space-y-16">
+				<div class="flex space-x-2 justify-center">
+					<img src="~/resources/online-library.png" alt="brand" />
+					<h2 class="text-base-100 text-xl md:text-2xl">LibriFlow</h2>
+				</div>
+
+				<div class="space-y-8 text-base-100">
+					<div class="flex space-x-2 relative items-center">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="size-6"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+							/>
+						</svg>
+						<h3 class="text-nowrap hover-underline md:text-lg"><a asp-action="Index" asp-controller="Book">Manage Books</a></h3>
+					</div>
+
+					<div class="flex space-x-2 relative items-center">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="size-6"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+							/>
+						</svg>
+						<h3 class="hover-underline text-nowrap md:text-lg">Manage Users</h3>
+					</div>
+				</div>
+			</div>
+
+			<div class="flex justify-center space-x-1 text-red-600 btn btn-ghost">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+					/>
+				</svg>
+				<h5 class="md:text-lg">Sign Out</h5>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="basis-[70%] pt-4 px-3 md:flex md:justify-center sm:pt-8 lg:basis-[75%]"
+	>
+		<div class="grid gap-2 sm:grid-cols-2 md:gap-10">
+			<div
+				id="users-count"
+				class="bg-neutral glass w-52 h-32 rounded-2xl flex space-x-3 p-3 md:w-56 lg:w-60"
+			>
+				<div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-10 text-base-100"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+						/>
+					</svg>
+				</div>
+
+				<div>
+					<h6 class="text-xl text-accent md:text-3xl">300</h6>
+					<h6 class="text-xs text-neutral-700 md:text-base">Total Users</h6>
+				</div>
+			</div>
+
+			<div
+				id="books-count"
+				class="bg-neutral glass w-52 h-32 rounded-2xl flex space-x-3 p-3 md:w-56 lg:w-60"
+			>
+				<div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-10 text-base-100"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+						/>
+					</svg>
+				</div>
+
+				<div>
+					<h6 class="text-xl text-accent md:text-3xl">300</h6>
+					<h6 class="text-xs text-neutral-700 md:text-base">Total Books</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

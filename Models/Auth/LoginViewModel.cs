@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using LibraryManagement.Models.Auth;
 
 namespace LibraryManagement.Models
 {

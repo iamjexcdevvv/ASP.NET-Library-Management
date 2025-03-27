@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LibraryManagement.Models;
+using LibraryManagement.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
