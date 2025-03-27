@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LibraryManagement.Models
+namespace LibraryManagement.Models.Auth
 {
     public interface IAccount
     {
