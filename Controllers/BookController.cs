@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using LibraryManagement.Models.Book;
 using LibraryManagement.Services;
+using System.Threading.Tasks;
 
 namespace LibraryManagement.Controllers;
 
@@ -38,6 +39,16 @@ public class BookController : Controller
     {
         List<BookEntries> booksObj = await _bookRepository.GetBooks();
         return View(booksObj);
+    }
+
+    public async Task<ActionResult> GetCount()
+    {
+        int count = await _bookRepository.GetBooksCount();
+
+        return Json(new {
+            success = true,
+            bookCount = count
+        });
     }
 
     [HttpPost]
