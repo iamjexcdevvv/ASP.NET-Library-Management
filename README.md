@@ -9,4 +9,4 @@ ASP.NET Core MVC Architecture following SOLID principle
 ## FUTURE PLAN
 - [ ] User Management (CRUD operations)
 - [ ] User dashboard
-- [ ] Admin dashboard
+- [x] Admin dashboard
